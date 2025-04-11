@@ -43,8 +43,8 @@ class _HomePageState extends State<HomePage> {
                   labelType: NavigationRailLabelType.selected,
                   destinations: const [
                     NavigationRailDestination(
-                      icon: Icon(Icons.home_outlined),
-                      selectedIcon: Icon(Icons.home),
+                      icon: Icon(LucideIcons.house),
+                      selectedIcon: Icon(LucideIcons.house, color: Colors.blue,),
                       label: Text("Início"),
                     ),
                     NavigationRailDestination(

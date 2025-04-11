@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tube/pages/home/homePage.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -17,9 +18,11 @@ class MyApp extends StatelessWidget {
       theme: ShadThemeData(
         colorScheme: ShadGrayColorScheme.dark(),
         brightness: Brightness.dark,
+        textTheme: ShadTextTheme(
+          googleFontBuilder: GoogleFonts.oswald,
+        )
       ),
-      home: HomePage(),
-      
+      home: HomePage()
     );
   }
 }
