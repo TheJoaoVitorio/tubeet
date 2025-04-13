@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tube/pages/home/homePage.dart';
+import 'package:tube/pages/home/home_page.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 void main() {
