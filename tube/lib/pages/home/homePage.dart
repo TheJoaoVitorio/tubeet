@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tube/components/header/header.dart';
-import 'package:tube/components/bottomNavigationbar/bottomNavigation.dart';
+import 'package:tube/pages/treading/threadingPage.dart';
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,7 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _pages = [
     const Center(child: Text("Página Inicial")),
-    const Center(child: Text("Em Alta")),
+    Threadingpage(),
     const Center(child: Text("Inscrições")),
     const Center(child: Text("Biblioteca")),
   ];
@@ -26,8 +27,6 @@ class _HomePageState extends State<HomePage> {
       _selectedIndex = index;
     });
   }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -41,22 +40,25 @@ class _HomePageState extends State<HomePage> {
               : Row(
                 children: [
                   NavigationRail(
-                    selectedIndex: _selectedIndex,                    
+                    selectedIndex: _selectedIndex,
                     onDestinationSelected: _onItemTapped,
                     selectedIconTheme: IconThemeData(color: Colors.blue),
-                    selectedLabelTextStyle: GoogleFonts.oswald(color: Colors.blue),
+                    selectedLabelTextStyle: GoogleFonts.oswald(
+                      color: Colors.blue,
+                    ),
+                    indicatorShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
                     labelType: NavigationRailLabelType.selected,
                     destinations: const [
-                      NavigationRailDestination(                        
+                      NavigationRailDestination(
                         icon: Icon(LucideIcons.house),
-                        selectedIcon: Icon(
-                          LucideIcons.house,                
-                        ),
+                        selectedIcon: Icon(LucideIcons.house),
                         label: Text("Início"),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.trending_up_outlined),
-                        selectedIcon: Icon(Icons.trending_up),
+                        icon: Icon(Icons.whatshot),
+                        selectedIcon: Icon(Icons.whatshot),
                         label: Text("Em Alta"),
                       ),
                       NavigationRailDestination(
@@ -84,14 +86,14 @@ class _HomePageState extends State<HomePage> {
                 selectedItemColor: Colors.blue,
                 items: const [
                   BottomNavigationBarItem(
-                    icon: Icon(LucideIcons.house),                                        
+                    icon: Icon(LucideIcons.house),
                     activeIcon: Icon(LucideIcons.house),
                     label: 'Início',
-                    backgroundColor: Colors.blue
+                    backgroundColor: Colors.blue,
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Icons.trending_up_outlined),
-                    activeIcon: Icon(Icons.trending_up),
+                    icon: Icon(Icons.whatshot),
+                    activeIcon: Icon(Icons.whatshot),
                     label: 'Em Alta',
                   ),
                   BottomNavigationBarItem(
