@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tube/components/video_card/video_card.dart';
 import 'package:tube/models/video_model/video_model.dart';
+import 'package:tube/services/api_youtube/api_youtube.dart';
 
 class Threadingpage extends StatefulWidget {
   const Threadingpage({super.key});
@@ -12,12 +13,48 @@ class Threadingpage extends StatefulWidget {
 }
 
 class _ThreadingpageState extends State<Threadingpage> {
+
+  final ApiYoutubeService apiYoutubeService = ApiYoutubeService();
+
+  List<VideoModel> _videos = [];
+  bool _isLoading = true;
+  String _errorMessage = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchVideos();
+  }
+
+  Future<void> _fetchVideos() async {
+    try {
+      final resultFetch = await apiYoutubeService.getMostPopularVideos();
+      setState((){
+        _videos = resultFetch;
+        _isLoading = false;
+      });
+    } catch (e){
+      setState(() {
+        _errorMessage = e.toString();
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    if(_isLoading){
+      return const Center(child: CircularProgressIndicator(),);
+    }
+
+    if (_errorMessage.isNotEmpty) {
+      return Center(child: Text('Erro: $_errorMessage'));
+    }
+
+
     final isMobile = MediaQuery.of(context).size.width < 600;
-    final isTablet =
-        MediaQuery.of(context).size.width >= 600 &&
-        MediaQuery.of(context).size.width < 1200;
+    final isTablet = MediaQuery.of(context).size.width >= 600 && MediaQuery.of(context).size.width < 1200;
     final isDesktop = MediaQuery.of(context).size.width >= 1200;
 
     return Scaffold(
@@ -72,21 +109,9 @@ class _ThreadingpageState extends State<Threadingpage> {
                     crossAxisSpacing: isMobile ? 16 : 25,
                     mainAxisSpacing: isMobile ? 12 : 18,
                   ),
-                  itemCount: 22,
+                  itemCount: _videos.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return VideoCard(
-                      video: VideoModel(
-                        id: "$index",
-                        title: "Título do vídeo $index asdadsdADASDASADA",
-                        channelId: "2",
-                        channelTitle: "Canal do vídeo",
-                        thumbnail: "https://via.placeholder.com/150",
-                        description: "Descrição do vídeo",
-                        viewCount: "1200",
-                        likeCount: "100",
-                        publishedAt: "2023-10-01T00:00:00Z",
-                      ),
-                    );
+                    return VideoCard(video: _videos[index]);
                   },
                 ),
               ),
