@@ -1,16 +1,19 @@
 import 'package:tube/config/env_config.dart' as env;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:tube/models/video_model/video_model.dart';
 
 class ApiYoutubeService {
   final Uri baseUrl = Uri.parse(env.EnvConfig.apiUrl);
   final _apiKey = env.EnvConfig.apiKey;
 
-  Future<Map<String, dynamic>> getMostPopularVideos() async {
+  Future<List<VideoModel>> getMostPopularVideos() async {
     final url = baseUrl.replace(
-      path: '${baseUrl.path}search',
+      path: '${baseUrl.path}videos',
       queryParameters: {
         'part': 'snippet,contentDetails,statistics',
+        'chart': 'mostPopular',
+        'maxResults': '30',
         'regionCode': 'BR',
         'key': _apiKey,
       },
@@ -19,7 +22,9 @@ class ApiYoutubeService {
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      return json.decode(response.body);
+      final data = json.decode(response.body);
+      final List<dynamic> items = data['items'];
+      return items.map((item) => VideoModel.fromMap(item)).toList();
     } else {
       throw Exception("Erro ao carregar vídeos: ${response.statusCode}");
     }
