@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           googleFontBuilder: GoogleFonts.oswald,
         ),
       ),
-      home: const HomePage(),
+      home: const HomeContainerPage(),
     );
   }
 }
