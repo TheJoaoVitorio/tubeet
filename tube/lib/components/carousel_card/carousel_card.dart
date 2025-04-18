@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tube/models/video_model/video_model.dart';
 
 class CarouselCard extends StatefulWidget {
-  const CarouselCard({super.key});
+  const CarouselCard({Key? key, required this.videos}) : super(key: key);
+
+  final List<VideoModel> videos;
 
   @override
   State<CarouselCard> createState() => _CarouselCardState();
@@ -20,29 +23,25 @@ class _CarouselCardState extends State<CarouselCard> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.sizeOf(context).height;
 
-    return ListView(
-      children: <Widget>[
-        ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: height / 2),
-          child: CarouselView.weighted(
-            controller: controller,
-            itemSnapping: true,
-            flexWeights: const <int>[1, 7, 1],
-            children:
-                ImageInfo.values.map((ImageInfo image) {
-                  return HeroLayoutCard(imageInfo: image);
-                }).toList(),
-          ),
-        ),
-      ],
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: height / 2),
+      child: CarouselView.weighted(
+        controller: controller,
+        itemSnapping: true,
+        flexWeights: const <int>[1, 2, 1],
+        children:
+            widget.videos.map((video) {
+              return HeroLayoutCard(video: video);
+            }).toList(),
+      ),
     );
   }
 }
 
 class HeroLayoutCard extends StatelessWidget {
-  const HeroLayoutCard({super.key, required this.imageInfo});
+  const HeroLayoutCard({super.key, required this.video});
 
-  final ImageInfo imageInfo;
+  final VideoModel video;
 
   @override
   Widget build(BuildContext context) {
@@ -50,14 +49,26 @@ class HeroLayoutCard extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.bottomStart,
       children: <Widget>[
-        ClipRRect(
-          child: OverflowBox(
-            maxWidth: width * 7 / 8,
-            minWidth: width * 7 / 8,
-            child: Image(
-              fit: BoxFit.cover,
-              image: NetworkImage(
-                'https://flutter.github.io/assets-for-api-docs/assets/material/${imageInfo.url}',
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: const Color.fromARGB(99, 68, 137, 255),
+                blurRadius: 1,
+                offset: Offset(0, 4),
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: OverflowBox(
+              maxWidth: width * 7 / 8,
+              minWidth: width * 7 / 8,
+              child: Image(
+                fit: BoxFit.scaleDown,
+                image: NetworkImage(video.thumbnail),
               ),
             ),
           ),
@@ -69,10 +80,12 @@ class HeroLayoutCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
-                imageInfo.title,
+                video.title,
                 overflow: TextOverflow.clip,
                 softWrap: false,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                ),
               ),
             ],
           ),
@@ -80,42 +93,4 @@ class HeroLayoutCard extends StatelessWidget {
       ],
     );
   }
-}
-
-enum ImageInfo {
-  image0(
-    'The Flow',
-    'Sponsored | Season 1 Now Streaming',
-    'content_based_color_scheme_1.png',
-  ),
-  image1(
-    'Through the Pane',
-    'Sponsored | Season 1 Now Streaming',
-    'content_based_color_scheme_2.png',
-  ),
-  image2(
-    'Iridescence',
-    'Sponsored | Season 1 Now Streaming',
-    'content_based_color_scheme_3.png',
-  ),
-  image3(
-    'Sea Change',
-    'Sponsored | Season 1 Now Streaming',
-    'content_based_color_scheme_4.png',
-  ),
-  image4(
-    'Blue Symphony',
-    'Sponsored | Season 1 Now Streaming',
-    'content_based_color_scheme_5.png',
-  ),
-  image5(
-    'When It Rains',
-    'Sponsored | Season 1 Now Streaming',
-    'content_based_color_scheme_6.png',
-  );
-
-  const ImageInfo(this.title, this.subtitle, this.url);
-  final String title;
-  final String subtitle;
-  final String url;
 }
