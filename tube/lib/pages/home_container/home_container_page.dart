@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tube/components/carousel_card/carousel_card.dart';
 import 'package:tube/components/header/header.dart';
+import 'package:tube/pages/home/home_page.dart';
+import 'package:tube/pages/library/library_page.dart';
 import 'package:tube/pages/subscription/subscription_page.dart';
 import 'package:tube/pages/treading/threading_Page.dart';
 
@@ -17,10 +19,10 @@ class _HomeContainerPageState extends State<HomeContainerPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    // HomePage(),
+    HomePage(),
     Threadingpage(),
     Subscriptionpage(),
-    const Center(child: Text("Biblioteca")),
+    LibraryPage()
   ];
 
   void _onItemTapped(int index) {
