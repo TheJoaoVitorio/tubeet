@@ -6,18 +6,18 @@ import 'package:tube/components/header/header.dart';
 import 'package:tube/pages/subscription/subscription_page.dart';
 import 'package:tube/pages/treading/threading_Page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomeContainerPage extends StatefulWidget {
+  const HomeContainerPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeContainerPage> createState() => _HomeContainerPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeContainerPageState extends State<HomeContainerPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    const CarouselCard(),
+    // HomePage(),
     Threadingpage(),
     Subscriptionpage(),
     const Center(child: Text("Biblioteca")),
