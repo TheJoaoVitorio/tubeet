@@ -29,4 +29,28 @@ class ApiYoutubeService {
       throw Exception("Erro ao carregar vídeos: ${response.statusCode}");
     }
   }
+
+
+  Future<List<VideoModel>> getTrailersFilms() async {
+    final url = baseUrl.replace(
+      path: '${baseUrl.path}search',
+      queryParameters: {
+        'part': 'snippet',
+        'maxResults': '10',
+        'q': 'Trailers films',
+        'regionCode': 'BR',
+        'key' : _apiKey
+      }
+    );
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200){
+      final data = json.decode(response.body);
+      final List<dynamic> items = data['items'];
+      return items.map( (item) => VideoModel.fromMap(item)).toList();
+    }else{
+      throw Exception('Erro ao carregar videos: ${response.statusCode}');
+    }
+  }
 }
