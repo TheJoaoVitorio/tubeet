@@ -10,15 +10,15 @@ class VideoModel {
   String publishedAt;
 
   VideoModel({
-    required this.id,
-    required this.title,
-    required this.channelId,
-    required this.channelTitle,
-    required this.thumbnail,
-    required this.description,
-    required this.viewCount,
-    required this.likeCount,
-    required this.publishedAt,
+    this.id = '',
+    this.title = '',
+    this.channelId = '',
+    this.channelTitle = '',
+    this.thumbnail = '',
+    this.description = '',
+    this.viewCount = '0',
+    this.likeCount = '0',
+    this.publishedAt = '',
   });
 
   // Construtor nomeado para criar a partir de um Map (ex.: JSON)
