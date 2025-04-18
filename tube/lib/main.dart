@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart'; // <-- importa o dotenv
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tube/pages/home/home_page.dart';
+import 'package:tube/pages/home_container/home_container_page.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 Future<void> main() async {
