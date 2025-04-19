@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:tube/components/listtile_header/listtile_header.dart';
 import 'package:tube/components/video_card/video_card.dart';
 import 'package:tube/models/video_model/video_model.dart';
 import 'package:tube/services/api_youtube/api_youtube.dart';
@@ -13,7 +12,6 @@ class Threadingpage extends StatefulWidget {
 }
 
 class _ThreadingpageState extends State<Threadingpage> {
-
   final ApiYoutubeService apiYoutubeService = ApiYoutubeService();
 
   List<VideoModel> _videos = [];
@@ -29,11 +27,11 @@ class _ThreadingpageState extends State<Threadingpage> {
   Future<void> _fetchVideos() async {
     try {
       final resultFetch = await apiYoutubeService.getMostPopularVideos();
-      setState((){
+      setState(() {
         _videos = resultFetch;
         _isLoading = false;
       });
-    } catch (e){
+    } catch (e) {
       setState(() {
         _errorMessage = e.toString();
         _isLoading = false;
@@ -43,19 +41,19 @@ class _ThreadingpageState extends State<Threadingpage> {
 
   @override
   Widget build(BuildContext context) {
-
-    if(_isLoading){
-      return const Center(child: CircularProgressIndicator(),);
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
     }
 
     if (_errorMessage.isNotEmpty) {
       return Center(child: Text('Erro: $_errorMessage'));
     }
 
-
     final isMobile = MediaQuery.of(context).size.width < 600;
-    final isTablet = MediaQuery.of(context).size.width >= 600 && MediaQuery.of(context).size.width < 1200;
-    final isDesktop = MediaQuery.of(context).size.width >= 1200;
+    final isTablet =
+        MediaQuery.of(context).size.width >= 600 &&
+        MediaQuery.of(context).size.width < 1200;
+    //final isDesktop = MediaQuery.of(context).size.width >= 1200;
 
     return Scaffold(
       body: CustomScrollView(
@@ -66,15 +64,9 @@ class _ThreadingpageState extends State<Threadingpage> {
             floating: false,
             expandedHeight: 50,
             flexibleSpace: FlexibleSpaceBar(
-              title: ListTile(
-                leading: CircleAvatar(
-                  backgroundColor: Colors.lightBlue,
-                  child: Icon(Icons.whatshot, size: 28),
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-                title: Text("Em alta", style: TextStyle(fontSize: 28)),
+              title: ListTitleHeader(
+                titleHeader: 'Em alta',
+                iconLeading: Icons.whatshot,
               ),
             ),
           ),
@@ -88,7 +80,7 @@ class _ThreadingpageState extends State<Threadingpage> {
                           ? 300
                           : isTablet
                           ? 800
-                          : 1100, 
+                          : 1100,
                 ),
                 child: GridView.builder(
                   shrinkWrap: true,
