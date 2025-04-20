@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tube/components/carousel_card/carousel_card.dart';
 import 'package:tube/components/carousel_circle_card/carousel_circle_card.dart';
-import 'package:tube/components/listtile_header/listtile_header.dart';
 import 'package:tube/models/video_model/video_model.dart';
 import 'package:tube/services/api_youtube/api_youtube.dart';
 
@@ -16,7 +15,20 @@ class _HomePageState extends State<HomePage> {
   final ApiYoutubeService apiYoutubeService = ApiYoutubeService();
 
   List<VideoModel> _videos = [];
+  List<String> categories = [
+    'Viagem',
+    'Games',
+    'Programação',
+    'Esporte',
+    'Música',
+    'Counter-Strike 2',
+    'Samba',
+    'Memes',
+    'Unboxing',
+  ];
+
   bool _isLoading = true;
+  String _categorySelected = '';
   String _errorMessage = '';
 
   @override
@@ -59,11 +71,17 @@ class _HomePageState extends State<HomePage> {
     return ListView(
       padding: EdgeInsets.all(18),
       children: [
-        ListTitleHeader(titleHeader: 'Filmes', iconLeading: Icons.movie),
         CarouselCard(videos: _videos),
         SizedBox(height: 20),
-        ListTitleHeader(titleHeader: 'Canais', iconLeading: Icons.subscriptions),
-        CarouselCircleCard(),
+        CarouselCircleCard(
+          items: categories,
+          onItemSelected:
+              (itemIndex) => {
+                setState(() {
+                  _categorySelected = categories[itemIndex];
+                }),
+              },
+        ),
       ],
     );
   }
