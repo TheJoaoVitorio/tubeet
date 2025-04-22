@@ -37,7 +37,7 @@ class ApiYoutubeService {
       queryParameters: {
         'part': 'snippet',
         'maxResults': '10',
-        'q': 'Trailers films',
+        'q': 'Trailers films 2025',
         'regionCode': 'BR',
         'key' : _apiKey
       }
@@ -50,7 +50,33 @@ class ApiYoutubeService {
       final List<dynamic> items = data['items'];
       return items.map( (item) => VideoModel.fromMap(item)).toList();
     }else{
-      throw Exception('Erro ao carregar videos: ${response.statusCode}');
+      throw Exception('Erro ao carregar os trailers: ${response.statusCode}');
     }
   }
+
+
+  Future<List<VideoModel>> getVideosWithCategory(String category) async {
+    final url = baseUrl.replace(
+      path: '${baseUrl.path}search',
+      queryParameters: {
+        'part': 'snippet',
+        'maxResults': '25',
+        'q': category,
+        'regionCode': 'BR',
+        'key': _apiKey
+      }
+    );
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200){
+      final data = json.decode(response.body);
+      final List<dynamic> items = data['items'];
+      return items.map( (item) => VideoModel.fromMap(item)).toList();
+    }else{
+      throw Exception('Erro ao carregar videos por categoria: ${response.statusCode}');
+    }
+  }
+
+
 }
