@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class CarouselCircleCard extends StatefulWidget {
   final List<String> items;
   final Function(int)? onItemSelected;
+  final int initialSelectedIndex;
 
   const CarouselCircleCard({
     super.key,
     required this.items,
     this.onItemSelected,
+    this.initialSelectedIndex = 0,
   });
 
   @override
@@ -15,12 +17,14 @@ class CarouselCircleCard extends StatefulWidget {
 }
 
 class _CarouselCircleCardState extends State<CarouselCircleCard> {
-  int _selectedIndex = 0;
+  late int _selectedIndex;
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
+    _selectedIndex = widget.initialSelectedIndex;
+    
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_selectedIndex != 0) {
         _scrollToSelectedItem(_selectedIndex);
