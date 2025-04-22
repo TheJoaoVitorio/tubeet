@@ -96,36 +96,40 @@ class _VideoCardState extends State<VideoCard> {
                                     ),
                                   ),
                                   Row(
-                                    // mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
-                                      Icon(
-                                        Icons.visibility,
-                                        color: Colors.grey,
-                                        size: 18 * textScaleFactor,
-                                      ),
-                                      SizedBox(width: screenSize.width * 0.005),
-                                      Text(
-                                        formatNumber(widget.video.viewCount),
-                                        style: GoogleFonts.oswald(
-                                          fontSize: 14 * textScaleFactor,
-                                          color: Colors.grey[600],
+                                      if (widget.video.viewCount != '0') ...[
+                                        Icon(
+                                          Icons.visibility,
+                                          color: Colors.grey,
+                                          size: 18 * textScaleFactor,
                                         ),
-                                      ),
-                                      SizedBox(width: screenSize.width * 0.01),
-                                      Icon(
-                                        Icons.thumb_up,
-                                        color: Colors.grey,
-                                        size: 18 * textScaleFactor,
-                                      ),
-                                      SizedBox(width: screenSize.width * 0.005),
-                                      Text(
-                                        formatNumber(widget.video.likeCount),
-                                        style: GoogleFonts.oswald(
-                                          fontSize: cardWidth * 0.045,
-                                          color: Colors.grey[600],
+                                        SizedBox(width: screenSize.width * 0.005),
+                                        Text(
+                                          formatNumber(widget.video.viewCount),
+                                          style: GoogleFonts.oswald(
+                                            fontSize: 14 * textScaleFactor,
+                                            color: Colors.grey[600],
+                                          ),
                                         ),
-                                      ),
+                                      ],
+                                      if (widget.video.viewCount != '0' && widget.video.likeCount != '0')
+                                        SizedBox(width: screenSize.width * 0.01),
+                                      if (widget.video.likeCount != '0') ...[
+                                        Icon(
+                                          Icons.thumb_up,
+                                          color: Colors.grey,
+                                          size: 18 * textScaleFactor,
+                                        ),
+                                        SizedBox(width: screenSize.width * 0.005),
+                                        Text(
+                                          formatNumber(widget.video.likeCount),
+                                          style: GoogleFonts.oswald(
+                                            fontSize: cardWidth * 0.045,
+                                            color: Colors.grey[600],
+                                          ),
+                                        ),
+                                      ],
                                     ],
                                   ),
                                 ],
