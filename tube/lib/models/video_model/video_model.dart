@@ -23,8 +23,13 @@ class VideoModel {
 
   // Construtor nomeado para criar a partir de um Map (ex.: JSON)
   factory VideoModel.fromMap(Map<String, dynamic> map) {
+
+    final videoId = map['id'] is String ? map['id'] : 
+                   map['id'] is Map ? map['id']['videoId'] ?? '' : '';
+    
     return VideoModel(
-      id: map['id'] is String ? map['id'] : map['id']['videoId'],
+      // id: map['id'] is String ? map['id'] : map['id']['videoId'],
+      id: videoId,
       title: map['snippet']['title'] ?? '',
       channelId: map['snippet']['channelId'] ?? '',
       channelTitle: map['snippet']['channelTitle'] ?? '',
